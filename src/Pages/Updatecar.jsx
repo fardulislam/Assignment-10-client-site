@@ -1,49 +1,54 @@
 import React, { use } from "react";
 import { Authcontext } from "../Context/AuthContext";
+import { useLoaderData } from "react-router";
 import { toast } from "react-toastify";
 
-const Addcar = () => {
-  const { user } = use(Authcontext);
-  console.log(user);
-  const hendlesubmit = (e) => {
-    e.preventDefault();
-    const fromdata = {
-      Name: e.target.Name.value,
-      description:e.target.description.value,
-      category: e.target.category.value,
-      rentprice:e.target.rentprice.value,
-      location:e.target.location.value,
-      image: e.target.image.value,
-      providerName:e.target.providerName.value,
-      providerEmail:e.target.providerEmail.value,
-      
-    };
-    fetch("http://localhost:3000/car-collection", {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(fromdata),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        toast.success("add car data");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+const Updatecar = () => {
+ const {user}=use(Authcontext)
 
+ const cardata = useLoaderData()
+      const hendlesubmit = (e) => {
+        e.preventDefault();
+        const updatefromdata = {
+          Name: e.target.Name.value,
+          description:e.target.description.value,
+          category: e.target.category.value,
+          rentprice:Number(e.target.rentprice.value,),
+          location:e.target.location.value,
+          image: e.target.image.value,
+        };
+        fetch(`http://localhost:3000/car-collection/${cardata._id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatefromdata),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            toast.success("update car data");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      };
+    
+ 
   return (
-    <div className="min-h-screen  p-8 mt-24 max-w-11/12 mx-auto">
-      <form onSubmit={hendlesubmit} className="max-w-3xl mx-auto p-6 bg-base-100 shadow rounded-xl space-y-4">
+    <div className="min-h-screen  px-20 py-8 mt-24 max-w-11/12 mx-auto">
+      <form
+        onSubmit={hendlesubmit}
+        className="max-w-3xl mx-auto px-12 py-4 bg-base-100 shadow rounded-xl space-y-4"
+      >
+        <h2 className="text-2xl font-bold text-center">Update car</h2>
         {/* Car Name */}
         <div>
           <label className="label">Car Name</label>
           <input
             type="text"
             name="Name"
+            defaultValue={cardata.name}
             placeholder="e.g. Toyota Corolla"
             className="input input-bordered w-full"
             required
@@ -59,6 +64,7 @@ const Addcar = () => {
             className="textarea textarea-bordered w-full"
             rows={4}
             required
+            defaultValue={cardata.description}
           ></textarea>
         </div>
 
@@ -69,6 +75,7 @@ const Addcar = () => {
             name="category"
             className="select select-bordered w-full"
             required
+            defaultValue={cardata.category}
           >
             <option value="">Select category</option>
             <option value="Sedan">Sedan</option>
@@ -85,6 +92,7 @@ const Addcar = () => {
           <input
             type="number"
             name="rentprice"
+            defaultValue={cardata.rentprice}
             placeholder="e.g. 3500"
             className="input input-bordered w-full"
             required
@@ -97,6 +105,7 @@ const Addcar = () => {
           <input
             type="text"
             name="location"
+            defaultValue={cardata.location}
             placeholder="e.g. Dhaka, Bangladesh"
             className="input input-bordered w-full"
             required
@@ -109,6 +118,7 @@ const Addcar = () => {
           <input
             type="url"
             name="image"
+            defaultValue={cardata.image}
             placeholder="https://images.unsplash.com/..."
             className="input input-bordered w-full"
             required
@@ -137,15 +147,15 @@ const Addcar = () => {
             readOnly
             className="input input-bordered w-full bg-gray-100 cursor-not-allowed"
           />
-        </div>
+        </div >
 
         {/* Submit Button */}
-        <button type="submit" className="btn btn-primary w-full">
-          Add Car
+         <button type="submit" className="btn btn-primary px-10 w-full">
+          Update car
         </button>
       </form>
     </div>
   );
 };
 
-export default Addcar;
+export default Updatecar;

@@ -1,10 +1,36 @@
-import React, {  useContext } from "react";
+import React, {  useContext, useState } from "react";
 import { Authcontext } from "../Context/AuthContext";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { IoEye } from "react-icons/io5";
+import { FaEyeSlash } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 const Login = () => {
+  const [show,setshow]=useState(false);
+  const navigate = useNavigate()
 
-  const {signinwithgoogle}=useContext(Authcontext)
+  const {signinwithgoogle,singinuser}=useContext(Authcontext)
+
+  const hendlesignin = (e)=>{
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    console.log(email,password)
+
+    singinuser(email,password)
+    .then((result)=>{
+      console.log(result)
+      toast.success('sign in successful')
+      navigate('/')
+    })
+    .catch((error)=>{
+      console.log(error.message)
+      toast.error(error.message)
+    })
+
+
+  }
 
   const hendlegooglesingin = ()=>{
     
@@ -24,20 +50,27 @@ const Login = () => {
          "
       >
         <div className="card-body">
-          <form action="">
+          <form onSubmit={hendlesignin} action="">
             <fieldset className="fieldset">
               <label className="label">Email</label>
               <input
+              name="email"
                 type="email"
                 className="input w-full"
                 placeholder="Email"
               />
-              <label className="label">Password</label>
+             <div className="relative">
+               <label className="label">Password</label>
               <input
-                type="password"
+              name="password"
+                type={show ? 'text':'password'}
                 className="input w-full"
                 placeholder="Password"
               />
+              <span onClick={()=> setshow(!show)} className="absolute right-[10px] top-[33px] cursor-pointer z-50">
+                {show? <IoEye />:<FaEyeSlash />}
+              </span>
+             </div>
               <div>
                 <a className="link link-hover">Forgot password?</a>
               </div>

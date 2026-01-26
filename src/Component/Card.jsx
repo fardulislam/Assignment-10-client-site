@@ -1,28 +1,28 @@
 import React from "react";
+import { Link } from "react-router";
 
-const Card = ({card_collection}) => {
-    const {name,category,brand,image,pricePerDay}= card_collection
+const Card = ({ card_collection }) => {
+  const { name, rentPrice, providerName,
+image, category, _id } = card_collection;
   return (
-    <div>
-      <div className="card bg-base-100 w-full h-96 shadow-sm object-cover">
-        <figure>
-          <img
-            src={image}
-            alt="car"
-          />
-        </figure>
-        <div className="card-body">
-          <h2 className="card-title">{name}</h2>
-          <p>
-            A card component has a figure, a body part, and inside body there
-            are title and actions parts
-          </p>
-          <div className="card-actions justify-end">
-            <button className="btn btn-primary">Buy Now</button>
-          </div>
-        </div>
+    <div className="bg-white shadow-lg rounded-2xl overflow-hidden w-full  hover:shadow-xl ">
+      <img
+        src={image}
+        alt={name}
+        className="w-full h-40 object-cover"
+      />
+      <div className="p-4">
+        <h2 className="text-xl font-semibold mb-1">{name}</h2>
+        <p className="text-gray-600 mb-1">Type: {category}</p>
+        <p className="text-gray-800 font-bold mb-2">${rentPrice} / day</p>
+        <p className="text-gray-500 mb-4">Provider: {providerName}</p>
+        <Link
+          to={`/car-details/${_id}`}
+          className=" w-full btn btn-outline bg-amber-300 text-white py-2 rounded-lg"
+        >
+          View Details
+        </Link>
       </div>
-
     </div>
   );
 };

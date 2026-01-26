@@ -11,7 +11,7 @@ const MainLayout = () => {
       >
         <Navber></Navber>
       </header>
-      <main className="">
+      <main className="bg-white">
         <Outlet></Outlet>
       </main>
       <footer>

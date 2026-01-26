@@ -8,6 +8,8 @@ import MyListing from "../Pages/MyListing";
 import Login from "../Pages/Login";
 import Signup from "../Pages/Signup";
 import Priviteroute from "../Component/Priviteroute";
+import CarDetails from "../Pages/CarDetails";
+import Updatecar from "../Pages/Updatecar";
 
 export const router = createBrowserRouter([
     {
@@ -16,17 +18,29 @@ export const router = createBrowserRouter([
         children:[
             {
                 index:true,
-                element:<Home></Home>
+                element:<Home></Home>,
+                  loader:()=>fetch('http://localhost:3000/car-collection')
             },
             {
                 path:'/addcar',
-                element:<Addcar></Addcar>
+                element:<Priviteroute><Addcar></Addcar></Priviteroute>
             },
             {
                 path:'/browscar',
                 element:<BrowsCar></BrowsCar>,
-                loader:()=>fetch('http://localhost:3000/car-collection')
+                 loader:()=>fetch('http://localhost:3000/car-collection')
+              
 
+            },
+            {
+                path:`/car-details/:id`,
+                element:<Priviteroute><CarDetails></CarDetails></Priviteroute>,
+                loader:({params})=>fetch(`http://localhost:3000/car-collection/${params.id}`)
+            },
+            {
+                path:'/updatecar/:id',
+                element:<Updatecar></Updatecar>,
+                  loader:({params})=>fetch(`http://localhost:3000/car-collection/${params.id}`)
             },
             {
                 path:'/mybooking',

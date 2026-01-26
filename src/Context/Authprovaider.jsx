@@ -9,6 +9,7 @@ const Authprovaider = ({children})=>{
 
 
     const [user,setuser] = useState(null);
+    
     const [loading,setloading] = useState(true);
 
 

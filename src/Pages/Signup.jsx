@@ -1,9 +1,15 @@
-import React, { useContext } from "react";
-import { Link } from "react-router";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router";
 import { Authcontext } from "../Context/AuthContext";
 import { toast } from "react-toastify";
+import { IoEye } from "react-icons/io5";
+import { FaEyeSlash } from "react-icons/fa";
 
 const Signup = () => {
+  const navigate = useNavigate()
+
+  const [show,setshow]=useState(false)
+
   const { createuser } = useContext(Authcontext);
 
   const hendlesubmit = (e) => {
@@ -40,6 +46,7 @@ const Signup = () => {
       .then((result) => {
         console.log(result);
         toast.success("signup successful");
+        navigate('/')
       })
       .catch((error) => {
         console.log(error);
@@ -77,13 +84,17 @@ const Signup = () => {
                 className="input w-full"
                 placeholder="Email"
               />
-              <label className="label">Password</label>
+            <div className="relative">
+                <label className="label">Password</label>
               <input
                 name="password"
-                type="password"
+                type={show ? 'text':'password'}
                 className="input w-full"
                 placeholder="Password"
               />
+              <span onClick={()=>setshow(!show)} className="absolute right-[10px] top-[34px] cursor-pointer z-50">{show? <IoEye />:<FaEyeSlash />}</span>
+
+            </div>
               <button className="btn btn-neutral mt-4">Sign up</button>
 
               <p className="text-center text-sm">

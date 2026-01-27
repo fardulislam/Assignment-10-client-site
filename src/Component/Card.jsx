@@ -1,9 +1,11 @@
 import React from "react";
 import { Link } from "react-router";
 
-const Card = ({ card_collection }) => {
+const Card = ({ data }) => {
+  if(!data)
+    return null ;
   const { name, rentPrice, providerName,
-image, category, _id } = card_collection;
+image, category, _id } = data;
   return (
     <div className="bg-white shadow-lg rounded-2xl overflow-hidden w-full  hover:shadow-xl ">
       <img

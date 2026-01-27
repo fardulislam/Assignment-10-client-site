@@ -1,22 +1,25 @@
 import React, { use } from "react";
 import { Authcontext } from "../Context/AuthContext";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router";
 
 const Addcar = () => {
   const { user } = use(Authcontext);
   console.log(user);
+
+  const navigate = useNavigate();
   const hendlesubmit = (e) => {
     e.preventDefault();
     const fromdata = {
-      Name: e.target.Name.value,
-      description:e.target.description.value,
+      name: e.target.Name.value,
+      description: e.target.description.value,
       category: e.target.category.value,
-      rentprice:e.target.rentprice.value,
-      location:e.target.location.value,
+      rentPrice: e.target.rentprice.value,
+      location: e.target.location.value,
       image: e.target.image.value,
-      providerName:e.target.providerName.value,
-      providerEmail:e.target.providerEmail.value,
-      
+      providerName: e.target.providerName.value,
+      providerEmail: e.target.providerEmail.value,
+      createdAt: new Date(),
     };
     fetch("http://localhost:3000/car-collection", {
       method: "post",
@@ -28,6 +31,7 @@ const Addcar = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
+        navigate("/browscar");
         toast.success("add car data");
       })
       .catch((error) => {
@@ -37,7 +41,10 @@ const Addcar = () => {
 
   return (
     <div className="min-h-screen  p-8 mt-24 max-w-11/12 mx-auto">
-      <form onSubmit={hendlesubmit} className="max-w-3xl mx-auto p-6 bg-base-100 shadow rounded-xl space-y-4">
+      <form
+        onSubmit={hendlesubmit}
+        className="max-w-3xl mx-auto p-6 bg-base-100 shadow rounded-xl space-y-4"
+      >
         {/* Car Name */}
         <div>
           <label className="label">Car Name</label>

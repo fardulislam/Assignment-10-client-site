@@ -19,7 +19,7 @@ export const router = createBrowserRouter([
             {
                 index:true,
                 element:<Home></Home>,
-                  loader:()=>fetch('http://localhost:3000/car-collection')
+                  loader:()=>fetch('http://localhost:3000/newest-car')
             },
             {
                 path:'/addcar',
@@ -48,7 +48,8 @@ export const router = createBrowserRouter([
             },
             {
                 path:'/mylisting',
-                element:<Priviteroute><MyListing></MyListing></Priviteroute>
+                element:<Priviteroute><MyListing></MyListing></Priviteroute>,
+                loader:({params})=>fetch(`http://localhost:3000/car/${params.id}`)
             },
             {
                 path:'/login',

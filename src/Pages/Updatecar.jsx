@@ -4,37 +4,41 @@ import { useLoaderData } from "react-router";
 import { toast } from "react-toastify";
 
 const Updatecar = () => {
- const {user}=use(Authcontext)
+  const { user } = use(Authcontext);
 
- const cardata = useLoaderData()
-      const hendlesubmit = (e) => {
-        e.preventDefault();
-        const updatefromdata = {
-          Name: e.target.Name.value,
-          description:e.target.description.value,
-          category: e.target.category.value,
-          rentprice:Number(e.target.rentprice.value,),
-          location:e.target.location.value,
-          image: e.target.image.value,
-        };
-        fetch(`http://localhost:3000/car-collection/${cardata._id}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(updatefromdata),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            console.log(data);
-            toast.success("update car data");
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      };
-    
- 
+  
+
+  const cardata = useLoaderData();
+  const hendlesubmit = (e) => {
+    e.preventDefault();
+    const updatefromdata = {
+      name: e.target.Name.value,
+      description: e.target.description.value,
+      category: e.target.category.value,
+      rentPrice: Number(e.target.rentprice.value),
+      location: e.target.location.value,
+      image: e.target.image.value,
+      status:e.target.status.value,
+      createdAt: new Date(),
+    };
+    fetch(`http://localhost:3000/car-collection/${cardata._id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatefromdata),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        toast.success("update car data");
+        
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <div className="min-h-screen  px-20 py-8 mt-24 max-w-11/12 mx-auto">
       <form
@@ -111,6 +115,19 @@ const Updatecar = () => {
             required
           />
         </div>
+        <div>
+  <label className="label">Status</label>
+  <select
+    name="status"
+    defaultValue={cardata.status}
+    className="select select-bordered w-full"
+    required
+  >
+    <option value="available">Available</option>
+    <option value="booked">Booked</option>
+    <option value="pending">Pending</option>
+  </select>
+</div>
 
         {/* Image URL */}
         <div>
@@ -147,10 +164,10 @@ const Updatecar = () => {
             readOnly
             className="input input-bordered w-full bg-gray-100 cursor-not-allowed"
           />
-        </div >
+        </div>
 
         {/* Submit Button */}
-         <button type="submit" className="btn btn-primary px-10 w-full">
+        <button type="submit" className="btn btn-primary px-10 w-full">
           Update car
         </button>
       </form>

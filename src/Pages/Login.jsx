@@ -1,6 +1,6 @@
 import React, {  useContext, useState } from "react";
 import { Authcontext } from "../Context/AuthContext";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { IoEye } from "react-icons/io5";
 import { FaEyeSlash } from "react-icons/fa";
 import { toast } from "react-toastify";
@@ -8,6 +8,9 @@ import { toast } from "react-toastify";
 const Login = () => {
   const [show,setshow]=useState(false);
   const navigate = useNavigate()
+  const location = useLocation()
+
+  const from = location.state?.from?.pathname || "/";
 
   const {signinwithgoogle,singinuser}=useContext(Authcontext)
 
@@ -22,7 +25,7 @@ const Login = () => {
     .then((result)=>{
       console.log(result)
       toast.success('sign in successful')
-      navigate('/')
+      navigate(from, { replace: true });
     })
     .catch((error)=>{
       console.log(error.message)
@@ -37,6 +40,7 @@ const Login = () => {
     signinwithgoogle()
     .then(result=>{
       console.log(result.user)
+      navigate(from, { replace: true });
     })
     .catch(error=>{
       console.log(error)

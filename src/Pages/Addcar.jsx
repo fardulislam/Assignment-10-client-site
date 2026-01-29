@@ -19,9 +19,10 @@ const Addcar = () => {
       image: e.target.image.value,
       providerName: e.target.providerName.value,
       providerEmail: e.target.providerEmail.value,
+      status: "available",
       createdAt: new Date(),
     };
-    fetch("http://localhost:3000/car-collection", {
+    fetch("https://assignment-10-server-opal-two.vercel.app/car-collection", {
       method: "post",
       headers: {
         "Content-Type": "application/json",

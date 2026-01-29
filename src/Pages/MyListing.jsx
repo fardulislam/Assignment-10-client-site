@@ -20,7 +20,7 @@ const MyListing = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:3000/car/${id}`, {
+        fetch(`https://assignment-10-server-opal-two.vercel.app/car/${id}`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
@@ -28,13 +28,15 @@ const MyListing = () => {
         })
           .then((res) => res.json())
           .then((data) => {
-            console.log(data);
-            // navigate("/browscar");
-            Swal.fire({
-              title: "Deleted!",
-              text: "Your file has been deleted.",
-              icon: "success",
-            });
+            if (data.deletedCount > 0) {
+              setcars((prevCars) => prevCars.filter((car) => car._id !== id));
+
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success",
+              });
+            }
           })
           .catch((error) => {
             console.log(error);
@@ -45,18 +47,21 @@ const MyListing = () => {
 
   useEffect(() => {
     if (user?.email) {
-      fetch(`http://localhost:3000/car?email=${user.email}`, {
-        headers: {
-          authorization: `Bearer ${user.accessToken}`,
+      fetch(
+        `https://assignment-10-server-opal-two.vercel.app/car?email=${user.email}`,
+        {
+          headers: {
+            authorization: `Bearer ${user.accessToken}`,
+          },
         },
-      })
+      )
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
           setcars(data);
         });
     }
-  }, [user?.email]);
+  }, [user]);
 
   console.log(cars);
   return (

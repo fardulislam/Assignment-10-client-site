@@ -161,7 +161,7 @@ rounded-box z-[50] mt-3 w-52 p-2 shadow-xl"
               </ul>
             </div>
           ) : (
-            <Link to={"/login"} className="btn">
+            <Link to={"/login"} className="border-1 bg-gradient-to-r from-[#8e9eab] to-[#eef2f3]   px-6 py-2 rounded-xl">
               Sign in
             </Link>
           )}

@@ -6,9 +6,9 @@ import { IoEye } from "react-icons/io5";
 import { FaEyeSlash } from "react-icons/fa";
 
 const Signup = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const [show,setshow]=useState(false)
+  const [show, setshow] = useState(false);
 
   const { createuser } = useContext(Authcontext);
 
@@ -20,7 +20,7 @@ const Signup = () => {
     const password = e.target.password.value;
 
     console.log(name, email, photo, password);
-    
+
     if (password.length < 8) {
       toast.error("Password must be at least 8 characters long");
       return;
@@ -46,7 +46,7 @@ const Signup = () => {
       .then((result) => {
         console.log(result);
         toast.success("signup successful");
-        navigate('/')
+        navigate("/");
       })
       .catch((error) => {
         console.log(error);
@@ -54,57 +54,89 @@ const Signup = () => {
       });
   };
   return (
-    <div className=" min-h-screen pt-30 pb-10 flex justify-center items-center  bg-pink-400">
+    <div className="min-h-screen flex justify-center items-center  pt-24 pb-10">
       <div
-        className="card w-full max-w-sm shadow-2xl
-        bg-white/20 backdrop-blur-xl border border-white/30 rounded-2xl
-         "
+        className="card w-full max-w-11/12 mx-auto shadow-2xl
+    bg-white/20 backdrop-blur-xl border border-white/30 rounded-2xl  "
       >
-        <div className="card-body">
-          <form onSubmit={hendlesubmit} action="">
-            <fieldset className="fieldset">
-              <label className="label">Name</label>
-              <input
-                name="name"
-                type="text"
-                className="input w-full"
-                placeholder="Your name"
+        <div className="card-body bg-white rounded-2xl ">
+          <div className="flex flex-col md:flex-row items-center gap-8">
+            {/* Image Section */}
+            <div className="w-full md:w-1/2 hidden md:block">
+              <img
+                src="https://static.vecteezy.com/system/resources/thumbnails/012/024/324/small/a-person-using-a-smartphone-to-fill-out-a-registration-form-registration-register-fill-in-personal-data-use-the-application-vector.jpg"
+                alt="Register"
+                className="w-full h-full object-cover rounded-xl"
               />
-              <label className="label">Photo URL</label>
-              <input
-                name="photo"
-                type="photo"
-                className="input w-full"
-                placeholder="Photo url"
-              />
-              <label className="label">Email</label>
-              <input
-                name="email"
-                type="email"
-                className="input w-full"
-                placeholder="Email"
-              />
-            <div className="relative">
-                <label className="label">Password</label>
-              <input
-                name="password"
-                type={show ? 'text':'password'}
-                className="input w-full"
-                placeholder="Password"
-              />
-              <span onClick={()=>setshow(!show)} className="absolute right-[10px] top-[34px] cursor-pointer z-50">{show? <IoEye />:<FaEyeSlash />}</span>
-
             </div>
-              <button className="btn btn-neutral mt-4">Sign up</button>
 
-              <p className="text-center text-sm">
-                Already Have an Account Please?{" "}
-                <Link className="hover:underline text-red-400" to={"/login"}>
-                  Sign in
-                </Link>
-              </p>
-            </fieldset>
-          </form>
+            {/* Form Section */}
+            <div className="w-full px-10 md:w-1/2">
+            <div className="py-5">
+              <h1 className="font-semibold text-5xl">Create, <br></br> <span className="text-blue-300">Your Account</span></h1>
+            </div>
+              <form onSubmit={hendlesubmit}>
+                <fieldset className="fieldset">
+                  <label className="label">Name</label>
+                  <input
+                    name="name"
+                    type="text"
+                    className="input w-full"
+                    placeholder="Your name"
+                    required
+                  />
+
+                  <label className="label">Photo URL</label>
+                  <input
+                    name="photo"
+                    type="text"
+                    className="input w-full"
+                    placeholder="Photo url"
+                  />
+
+                  <label className="label">Email</label>
+                  <input
+                    name="email"
+                    type="email"
+                    className="input w-full"
+                    placeholder="Email"
+                    required
+                  />
+
+                  <div className="relative mt-1">
+                    <label className="label">Password</label>
+                    <input
+                      name="password"
+                      type={show ? "text" : "password"}
+                      className="input w-full"
+                      placeholder="Password"
+                      required
+                    />
+                    <span
+                      onClick={() => setshow(!show)}
+                      className="absolute right-3 top-[34px] cursor-pointer"
+                    >
+                      {show ? <IoEye /> : <FaEyeSlash />}
+                    </span>
+                  </div>
+
+                  <button className="btn btn-neutral w-full mt-4">
+                    Sign up
+                  </button>
+
+                  <p className="text-center text-sm ">
+                    Already have an account?
+                    <Link
+                      className="hover:underline text-red-400 ml-1"
+                      to="/login"
+                    >
+                      Sign in
+                    </Link>
+                  </p>
+                </fieldset>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -5,13 +5,13 @@ import { Outlet } from "react-router";
 
 const MainLayout = () => {
   return (
-    <div className="">
+    <div className="bg-[#FCF8F8]">
       <header
         className=""
       >
         <Navber></Navber>
       </header>
-      <main className="bg-white">
+      <main className="">
         <Outlet></Outlet>
       </main>
       <footer>

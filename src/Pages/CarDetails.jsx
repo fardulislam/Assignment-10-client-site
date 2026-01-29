@@ -1,45 +1,53 @@
-import { Link, useLoaderData, useNavigate } from "react-router";
+import { Link, Navigate, useLoaderData, useNavigate } from "react-router";
 import Loading from "../Component/Loading";
 import Swal from "sweetalert2";
-
+import { useContext } from "react";
+import { Authcontext } from "../Context/AuthContext";
 
 const CarDetails = () => {
   const data = useLoaderData();
+  const navigate = useNavigate();
+  const { user } = useContext(Authcontext);
   console.log(data);
-  const navigate = useNavigate()
+  if (!data) {
+    return <Loading></Loading>;
+  }
 
-  const hendledelete = () => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        fetch(`http://localhost:3000/car-collection/${data._id}`, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            console.log(data);
-            navigate('/browscar')
-            Swal.fire({
-              title: "Deleted!",
-              text: "Your file has been deleted.",
-              icon: "success",
-            });
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
-    });
+  const handleBooking = () => {
+    const booking = {
+      carId: data._id,
+      carName: data.name,
+      carImage: data.image,
+      rentPrice: data.price,
+      userEmail: user.email,
+    };
+
+    fetch("https://assignment-10-server-opal-two.vercel.app/booking-car", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${user.accessToken}`,
+      },
+      body: JSON.stringify(booking),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Booking result:", data);
+        Swal.fire({
+          icon: "success",
+          title: "Booked!",
+          text: `${booking.carName} has been booked.`,
+        });
+        navigate("/mybooking"); // correct navigation
+      })
+      .catch((err) => {
+        console.error(err);
+        Swal.fire({
+          icon: "error",
+          title: "Booking failed",
+          text: "Something went wrong",
+        });
+      });
   };
 
   return (
@@ -48,12 +56,9 @@ const CarDetails = () => {
       <h1 className="text-3xl font-bold mt-4">{data.name}</h1>
       <p>{data.brand}</p>
       <p className="text-xl font-semibold">${data.price}/day</p>
-      <div className="flex justify-end gap-2">
-        <Link className="btn btn-outline" to={`/updatecar/${data._id}`}>
-          update car
-        </Link>
-        <button onClick={hendledelete} className="btn btn-outline px-10">
-          delete
+      <div className="flex justify-end ">
+        <button onClick={handleBooking} className="btn btn-outline">
+          Book now
         </button>
       </div>
     </div>

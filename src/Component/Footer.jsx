@@ -19,6 +19,7 @@ const Footer = () => {
           <a className="link link-hover">Press kit</a>
         </nav>
         <nav>
+          <button className="btn-primary">color</button>
           <h6 className="footer-title">Social</h6>
           <div className="grid grid-flow-col gap-4">
             <a>

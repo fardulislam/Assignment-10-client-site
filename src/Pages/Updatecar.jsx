@@ -6,8 +6,6 @@ import { toast } from "react-toastify";
 const Updatecar = () => {
   const { user } = use(Authcontext);
 
-  
-
   const cardata = useLoaderData();
   const hendlesubmit = (e) => {
     e.preventDefault();
@@ -18,21 +16,23 @@ const Updatecar = () => {
       rentPrice: Number(e.target.rentprice.value),
       location: e.target.location.value,
       image: e.target.image.value,
-      status:e.target.status.value,
+      status: e.target.status.value,
       createdAt: new Date(),
     };
-    fetch(`http://localhost:3000/car-collection/${cardata._id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
+    fetch(
+      `https://assignment-10-server-opal-two.vercel.app/car-collection/${cardata._id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatefromdata),
       },
-      body: JSON.stringify(updatefromdata),
-    })
+    )
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
         toast.success("update car data");
-        
       })
       .catch((error) => {
         console.log(error);
@@ -116,18 +116,18 @@ const Updatecar = () => {
           />
         </div>
         <div>
-  <label className="label">Status</label>
-  <select
-    name="status"
-    defaultValue={cardata.status}
-    className="select select-bordered w-full"
-    required
-  >
-    <option value="available">Available</option>
-    <option value="booked">Booked</option>
-    <option value="pending">Pending</option>
-  </select>
-</div>
+          <label className="label">Status</label>
+          <select
+            name="status"
+            defaultValue={cardata.status}
+            className="select select-bordered w-full"
+            required
+          >
+            <option value="available">Available</option>
+            <option value="booked">Booked</option>
+            <option value="pending">Pending</option>
+          </select>
+        </div>
 
         {/* Image URL */}
         <div>

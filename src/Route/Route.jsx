@@ -12,55 +12,80 @@ import CarDetails from "../Pages/CarDetails";
 import Updatecar from "../Pages/Updatecar";
 
 export const router = createBrowserRouter([
-    {
-        path:'/',
-        element:<MainLayout></MainLayout>,
-        children:[
-            {
-                index:true,
-                element:<Home></Home>,
-                  loader:()=>fetch('http://localhost:3000/newest-car')
-            },
-            {
-                path:'/addcar',
-                element:<Priviteroute><Addcar></Addcar></Priviteroute>
-            },
-            {
-                path:'/browscar',
-                element:<BrowsCar></BrowsCar>,
-                 loader:()=>fetch('http://localhost:3000/car-collection')
-              
-
-            },
-            {
-                path:`/car-details/:id`,
-                element:<Priviteroute><CarDetails></CarDetails></Priviteroute>,
-                loader:({params})=>fetch(`http://localhost:3000/car-collection/${params.id}`)
-            },
-            {
-                path:'/updatecar/:id',
-                element:<Updatecar></Updatecar>,
-                  loader:({params})=>fetch(`http://localhost:3000/car-collection/${params.id}`)
-            },
-            {
-                path:'/mybooking',
-                element:<Priviteroute><Mybooking></Mybooking></Priviteroute>
-            },
-            {
-                path:'/mylisting',
-                element:<Priviteroute><MyListing></MyListing></Priviteroute>,
-                loader:({params})=>fetch(`http://localhost:3000/car/${params.id}`)
-            },
-            {
-                path:'/login',
-                element:<Login></Login>
-            },
-            {
-                path:'/signup',
-                element:<Signup></Signup>
-            },
-           
-        ]
-        
-    },
-])
+  {
+    path: "/",
+    element: <MainLayout></MainLayout>,
+    children: [
+      {
+        index: true,
+        element: <Home></Home>,
+        loader: () =>
+          fetch("https://assignment-10-server-opal-two.vercel.app/newest-car"),
+      },
+      {
+        path: "/addcar",
+        element: (
+          <Priviteroute>
+            <Addcar></Addcar>
+          </Priviteroute>
+        ),
+      },
+      {
+        path: "/browscar",
+        element: <BrowsCar></BrowsCar>,
+        loader: () =>
+          fetch(
+            "https://assignment-10-server-opal-two.vercel.app/car-collection",
+          ),
+      },
+      {
+        path: `/car-details/:id`,
+        element: (
+          <Priviteroute>
+            <CarDetails></CarDetails>
+          </Priviteroute>
+        ),
+        loader: ({ params }) =>
+          fetch(
+            `https://assignment-10-server-opal-two.vercel.app/car-collection/${params.id}`,
+          ),
+      },
+      {
+        path: "/updatecar/:id",
+        element: <Updatecar></Updatecar>,
+        loader: ({ params }) =>
+          fetch(
+            `https://assignment-10-server-opal-two.vercel.app/car-collection/${params.id}`,
+          ),
+      },
+      {
+        path: "/mybooking",
+        element: (
+          <Priviteroute>
+            <Mybooking></Mybooking>
+          </Priviteroute>
+        ),
+      },
+      {
+        path: "/mylisting",
+        element: (
+          <Priviteroute>
+            <MyListing></MyListing>
+          </Priviteroute>
+        ),
+        loader: ({ params }) =>
+          fetch(
+            `https://assignment-10-server-opal-two.vercel.app/car/${params.id}`,
+          ),
+      },
+      {
+        path: "/login",
+        element: <Login></Login>,
+      },
+      {
+        path: "/signup",
+        element: <Signup></Signup>,
+      },
+    ],
+  },
+]);

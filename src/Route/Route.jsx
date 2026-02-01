@@ -10,11 +10,16 @@ import Signup from "../Pages/Signup";
 import Priviteroute from "../Component/Priviteroute";
 import CarDetails from "../Pages/CarDetails";
 import Updatecar from "../Pages/Updatecar";
+import Loading from "../Component/Loading";
+import Error from "../Component/error";
+
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout></MainLayout>,
+    hydrateFallbackElement:<Loading></Loading>,
+    errorElement:<Error></Error>,
     children: [
       {
         index: true,

@@ -2,6 +2,8 @@ import React from 'react';
 import Banner from '../Component/Banner';
 import { useLoaderData } from 'react-router';
 import Card from '../Component/card';
+import Banner2 from '../Component/Banner2';
+import Banner3 from '../Component/Banner3';
 
 
 
@@ -16,6 +18,13 @@ const Home = () => {
                {
                 newsetdata.map(data=> <Card key={data._id} data={data}></Card>)
                } 
+            </div>
+            <div className='w-11/12 mx-auto'>
+            <h1 className='font-bold text-5xl text-center mt-10'>Why Rent With Us</h1>
+                <Banner2></Banner2>
+            </div>
+            <div className='w-11/12 mx-auto py-10'>
+                <Banner3></Banner3>
             </div>
         </div>
     );

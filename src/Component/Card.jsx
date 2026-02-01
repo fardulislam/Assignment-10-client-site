@@ -15,7 +15,7 @@ const Card = ({ data }) => {
         <p className="text-gray-500 mb-4">Provider: {providerName}</p>
         <Link
           to={`/car-details/${_id}`}
-          className=" w-full btn btn-outline bg-amber-300 text-white py-2 rounded-lg"
+          className=" w-full btn btn-outline bg-secondary text-white py-2 rounded-lg"
         >
           View Details
         </Link>

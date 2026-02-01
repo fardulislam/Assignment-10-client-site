@@ -71,7 +71,7 @@ const MyBooking = () => {
     return <p className="text-center mt-10">No bookings yet!</p>;
 
   return (
-    <div className="min-h-screen mt-24 w-11/12 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className=" mt-24 w-11/12 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {bookingCar.map((booking) => (
         <div
           key={booking._id}
@@ -86,7 +86,7 @@ const MyBooking = () => {
           <p>৳ {booking.rentPrice} / day</p>
           <p className="badge badge-success">Booked</p>
           <button
-            className="btn btn-outline"
+            className="btn btn-outline bg-primary text-white my-4"
             onClick={() => handleDelete(booking._id)}
           >
             Delete
